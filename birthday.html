@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>诗墨宝贝4岁生日快乐🎂</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            font-family: "Comic Sans MS", "Marker Felt", sans-serif;
+            touch-action: manipulation; /* 优化触摸体验 */
+        }
+        
+        /* 背景图设置 - 适配各种屏幕 */
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/d97fe266692441ca8407acce502a864f.jpg~tplv-a9rns2rl98-24:720:720.image?rcl=20251127094433008107985D9BF35907A1&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1764812674&x-signature=EZP0UKJwDN4ExGvpVWE%2FrZpST5A%3D');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.85);
+            z-index: -1;
+        }
+        
+        /* 半透明遮罩增强文字可读性 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.6);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px 15px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            padding-top: 30px;
+        }
+        
+        /* 标题动画 */
+        .birthday-title {
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            color: #e63946;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* 名字特效 */
+        .name {
+            font-size: clamp(2.2rem, 8vw, 3rem);
+            color: #457b9d;
+            margin: 15px 0;
+            font-weight: bold;
+            text-shadow: 0 0 10px #fff, 0 0 20px #fff;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #457b9d; }
+            to { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #457b9d; }
+        }
+        
+        /* 年龄数字 */
+        .age {
+            font-size: clamp(4rem, 15vw, 6rem);
+            color: #ffb703;
+            margin: 10px 0;
+            text-shadow: 3px 3px 0px #e63946;
+            display: inline-block;
+            animation: shake 4s linear infinite;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(3deg) scale(1.05); }
+            50% { transform: rotate(0deg) scale(1); }
+            75% { transform: rotate(-3deg) scale(1.05); }
+        }
+        
+        /* 祝福语卡片 - 微信气泡风格 */
+        .blessing {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 4px dotted #ffb703;
+            transform: rotate(-1deg);
+            transition: all 0.3s;
+        }
+        
+        .blessing p {
+            font-size: clamp(1rem, 4vw, 1.15rem);
+            line-height: 1.8;
+            color: #264653;
+            margin: 0;
+        }
+        
+        /* 蛋糕图标 */
+        .cake {
+            font-size: clamp(3rem, 12vw, 5rem);
+            margin: 10px 0;
+            animation: rotate 8s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 微信风格按钮 */
+        .firework-btn {
+            background: linear-gradient(135deg, #ff6b6b, #e63946);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            border-radius: 50px;
+            margin: 20px 0 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.4);
+            transition: all 0.2s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .firework-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(230, 57, 70, 0.4);
+        }
+        
+        /* 微信表情包风格烟花 */
+        .wechat-firework {
+            position: absolute;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0;
+            animation: wechatRise 2s ease-out forwards;
+        }
+        
+        @keyframes wechatRise {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-200px) scale(1.2);
+                opacity: 0;
+            }
+        }
+        
+        /* 漂浮元素 */
+        .float-item {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.8;
+            animation: float 10s linear infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景图 -->
+    <div class="bg-image"></div>
+    <div class="overlay"></div>
+    
+    <div class="container">
+        <div class="birthday-title">🎉 生日快乐呀 🎉</div>
+        
+        <div class="name">张诗墨</div>
+        
+        <div>
+            <span class="age">4</span>
+            <span style="font-size: clamp(1.2rem, 5vw, 1.5rem); color: #e63946; font-weight: bold;">岁啦！</span>
+        </div>
+        
+        <div class="cake">🎂</div>
+        
+        <div class="blessing">
+            <p>亲爱的诗墨宝贝：</p>
+            <p>今天你4岁啦，祝你生日快乐！🥳</p>
+            <p>愿你每天都开开心心，</p>
+            <p>像小勇士一样勇敢探索，</p>
+            <p>健康快乐地长大，</p>
+            <p>成为更棒的小宝贝！</p>
+        </div>
+        
+        <button class="firework-btn" onclick="launchWechatFireworks()">
+            <i class="fa fa-magic"></i> 点我放烟花🎆
+        </button>
+    </div>
+
+    <script>
+        // 创建漂浮元素增加童趣
+        function createFloatItems() {
+            const items = ['🍭', '🎈', '🍬', '🎁', '🐰', '🦄', '🌈', '⭐'];
+            const container = document.body;
+            
+            items.forEach((item, index) => {
+                const elem = document.createElement('div');
+                elem.className = 'float-item';
+                elem.textContent = item;
+                elem.style.left = `${Math.random() * 100}%`;
+                elem.style.animationDelay = `${index * 2}s`;
+                elem.style.fontSize = `${Math.random() * 15 + 20}px`;
+                container.appendChild(elem);
+            });
+        }
+        
+        // 微信表情包风格烟花效果
+        function launchWechatFireworks() {
+            // 烟花图标集合（微信表情包风格）
+            const fireworks = ['🎆', '✨', '🎇', '💥', '🌟', '🎉'];
+            const container = document.body;
+            const count = 15; // 每次点击发射15个烟花元素
+            
+            // 播放点击音效（微信风格）
+            const audio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAzMzMzMzMzM5WZmZmZmZmnd7e3t7e3uHh4eHh4eHh5iYmJiYmJiXl5eXl5eXl56enp6enp6foKCgoKCgoKBgYGBgYGBgY+vr6vr6vr7GxsbGxsbGxsrKysrKysrK6urr6urr6+3t7e3t7e3uLi4uLi4uLi5ubm5ubm5ubq6uru6uru6+3t7e3t7e3uXl5eXl5eXl6Ojo6Ojo6Ojp6enp6enp6fn5+fn5+fn6GhoaGhoaGhoqKioqKioqKqqqqqqqqqqurq6urq6ur7GxsbGxsbGx7e3t7e3t7e/f39/f39/f4+Pj4+Pj4+Pn5+fn5+fn6Ojo6Ojo6Ojp6enp6enp6fq6uru6uru6+3t7e3t7e3uXl5eXl5eXl5+fn5+fn5+fn6enp6enp6enq6uru6uru6+3t7e3t7e3uXl5eXl5eXl5+fn5+fn5+fn6enp6enp6enr6+vr6+vr7O/v7+/v7+/v8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAP//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAP//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAP//');
+            audio.volume = 0.5;
+            audio.play().catch(e => {});
+            
+            // 生成多个烟花元素
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.className = 'wechat-firework';
+                    
+                    // 随机选择烟花图标
+                    firework.textContent = fireworks[Math.floor(Math.random() * fireworks.length)];
+                    
+                    // 随机大小
+                    const size = Math.random() * 30 + 20;
+                    firework.style.fontSize = `${size}px`;
+                    
+                    // 从按钮位置附近发射
+                    const btn = document.querySelector('.firework-btn');
+                    const rect = btn.getBoundingClientRect();
+                    const startX = rect.left + rect.width / 2;
+                    const startY = rect.top;
+                    
+                    // 随机偏移
+                    const offsetX = (Math.random() - 0.5) * 100;
+                    const offsetY = (Math.random() - 0.5) * 30;
+                    
+                    firework.style.left = `${startX + offsetX}px`;
+                    firework.style.top = `${startY + offsetY}px`;
+                    
+                    // 随机旋转角度
+                    firework.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    
+                    container.appendChild(firework);
+                    
+                    // 动画结束后移除元素
+                    setTimeout(() => {
+                        if (firework.parentNode) {
+                            container.removeChild(firework);
+                        }
+                    }, 2000);
+                }, i * 100); // 逐个发射，形成连续效果
+            }
+        }
+        
+        // 页面加载完成后初始化
+        window.onload = function() {
+            createFloatItems();
+            
+            // 自动播放一次小型烟花欢迎效果
+            setTimeout(() => {
+                const tempBtn = {
+                    getBoundingClientRect: () => ({
+                        left: window.innerWidth / 2,
+                        top: window.innerHeight * 0.7,
+                        width: 100
+                    })
+                };
+                // 临时替换按钮位置用于初始效果
+                document.querySelector('.firework-btn').getBoundingClientRect = tempBtn.getBoundingClientRect;
+                launchWechatFireworks();
+                
+                // 还原按钮位置
+                setTimeout(() => {
+                    delete document.querySelector('.firework-btn').getBoundingClientRect;
+                }, 1000);
+            }, 1500);
+        };
+        
+        // 支持点击屏幕任意位置也能放烟花
+        document.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('firework-btn')) {
+                // 临时改变烟花发射位置
+                const originalRect = document.querySelector('.firework-btn').getBoundingClientRect;
+                document.querySelector('.firework-btn').getBoundingClientRect = () => ({
+                    left: e.clientX,
+                    top: e.clientY,
+                    width: 50
+                });
+                
+                launchWechatFireworks();
+                
+                // 还原
+                setTimeout(() => {
+                    document.querySelector('.firework-btn').getBoundingClientRect = originalRect;
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
